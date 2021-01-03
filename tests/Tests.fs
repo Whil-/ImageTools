@@ -5,13 +5,23 @@ open ImageTools
 open System.IO
 open System.Management.Automation
 
+(*
 [<Fact>]
-let ``This is a dumb true test`` () =
-    Assert.True(true)
+let ``Test GetFileAssortedPropertiesCmdlet`` () =
+    let inputfolder = DirectoryInfo("./Input")
+    let cmd = GetFileAssortedPropertiesCmdlet()
+    try 
+        cmd.fromPath <- inputfolder.FullName
+        let result = cmd.Invoke()
+        Assert.True(false)
+    with 
+        | ex -> printfn "%s" (ex.Message)
 
 [<Fact>]
 let ``This is a dumb false test`` () =
     Assert.False(false)
+
+*)
 
 [<Fact>]
 let ``I can iterate through a folder and copy files`` () =
