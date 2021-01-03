@@ -1,0 +1,11 @@
+#+TITLE: ImageTools F# Cmdlet library
+
+Tricky beast this.
+
+Personally I'm using it together with a powershell script to move
+files to a central location then copy images with lower quality from
+there to personal locations.
+
+To build the project, try the following:
+
+: dotnet publish --framework net5.0 --runtime win-x64 --self-contained true
