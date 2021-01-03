@@ -31,7 +31,7 @@ type CopyImagesCmdlet() =
         let mutable index = 0
         let parallellcnt = 4
         let items = Array.length files
-        let progress = new ProgressRecord(0,"Copy images","Copying...")
+        let progress = ProgressRecord(0,"Copy images","Copying...")
         while index < items do
             progress.PercentComplete <- (index * 100) / items
             progress.CurrentOperation <- index.ToString() + " / " + items.ToString() + " files completed" 
@@ -54,7 +54,6 @@ type CopyImagesCmdlet() =
             index <- index + parallellcnt
         progress.PercentComplete <- 100
         this.WriteProgress(progress)
-
 
 [<Cmdlet("Get","DeletedImages")>]
 type GetDeletedImagesCmdlet() =

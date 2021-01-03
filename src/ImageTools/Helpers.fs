@@ -3,9 +3,6 @@
 open System.IO
 open ImageMagick
 open System.Text.RegularExpressions
-open System.Collections.Generic
-open System
-open System.Threading
 
 let GetMaybeUpdatedProfile (image:MagickImage) =
     let mutable profile = image.GetExifProfile()
