@@ -1,8 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-
     <IsPackable>false</IsPackable>
     <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
@@ -13,46 +12,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Input\2018\08\ILCE-6000\DSC00538.txt">
+    <Content Include="Input\A folder\1A.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2018\08\SM-N950F\20180703_162310.jpg">
+    <Content Include="Input\A folder\2013-10-18%284%29.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2018\08\SM-N950F\20180721_104422.jpg">
+    <Content Include="Input\A folder\20170726_154939048_iOS.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2018\08\SM-N950F\20180721_104427.jpg">
+    <Content Include="Input\A folder\20180703_162310.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2018\08\SM-N950F\20180721_104428.jpg">
+    <Content Include="Input\A folder\20180721_104422.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\1A.txt">
+    <Content Include="Input\A folder\20180721_104427.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\2013-10-18%284%29.jpg">
+    <Content Include="Input\A folder\20180721_104428.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\20170726_154939048_iOS.jpg">
+    <Content Include="Input\A folder\DSC00538.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\LiveMessage_2017-10-07-10-52-52.gif">
+    <Content Include="Input\LiveMessage_2017-10-07-10-52-52.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\LiveMessage_2017-10-28-23-31-56.gif">
+    <Content Include="Input\LiveMessage_2017-10-28-23-31-56.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\Screenshot_20160826-194422.png">
+    <Content Include="Input\Screenshot_20160826-194422.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\Unknown Date Taken\Unknown Camera\Screenshot_20160826-195551.png">
+    <Content Include="Input\Screenshot_20160826-195551.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2018\08\ILCE-6000\DSC00548.ARW">
+    <Content Include="Input\DSC00548.ARW">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\2020\12\iPhone\20201230_112809.heic">
+    <Content Include="Input\A folder\20201230_112809.heic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

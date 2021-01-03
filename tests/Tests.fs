@@ -6,12 +6,20 @@ open System.IO
 open System.Management.Automation
 
 [<Fact>]
+let ``This is a dumb true test`` () =
+    Assert.True(true)
+
+[<Fact>]
+let ``This is a dumb false test`` () =
+    Assert.False(false)
+
+[<Fact>]
 let ``I can iterate through a folder and copy files`` () =
 
     let inputfolder = DirectoryInfo("./Input")
     
     let inputFileCount = Helper.GetFiles inputfolder |> Array.length
-    let outputfolder = DirectoryInfo("TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
+    let outputfolder = DirectoryInfo("./TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
     
     if not outputfolder.Exists then 
         outputfolder.Create()
@@ -31,6 +39,7 @@ let ``I can iterate through a folder and copy files`` () =
         let outputFileCount = Helper.GetFiles outputfolder |> Array.length
         outputfolder.Delete(recursive = true)
 
+        Assert.True(inputFileCount > 0)
         Assert.Equal(inputFileCount,outputFileCount)
     else
         Assert.True(false)
