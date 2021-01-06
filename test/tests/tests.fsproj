@@ -15,7 +15,7 @@
     <Content Include="Input\A folder\1A.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\A folder\2013-10-18%284%29.jpg">
+    <Content Include="Input\A folder\2013-10-18.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Input\A folder\20170726_154939048_iOS.jpg">
@@ -30,7 +30,10 @@
     <Content Include="Input\A folder\20180721_104427.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\A folder\20180721_104428.jpg">
+    <Content Include="Input\A folder\Another folder\folder\20180721_104428.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Input\A folder\cat folder\Cat.gif">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Input\A folder\DSC00538.txt">
@@ -51,7 +54,7 @@
     <Content Include="Input\DSC00548.ARW">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Input\A folder\20201230_112809.heic">
+    <Content Include="Input\A folder\Another folder\20201230_112809.heic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -70,7 +73,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\ImageTools\ImageTools.fsproj" />
+    <ProjectReference Include="..\..\src\MediaMover\MediaMover.fsproj" />
   </ItemGroup>
 
 </Project>
