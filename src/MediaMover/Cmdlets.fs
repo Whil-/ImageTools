@@ -76,6 +76,7 @@ type MoveImagesCmdlet() =
                         TargetBasePath = toDir.FullName
                     }
                     Helper.MoveFile file ImageData.NewFullName |> ignore
+                    
                 })
             |> Async.Parallel
             |> Async.RunSynchronously
@@ -186,7 +187,7 @@ type CopyImagesCmdlet() =
 
 [<Cmdlet("Get","DeletedImages")>]
 type GetDeletedImagesCmdlet() =
-    inherit PSCmdlet()
+    inherit Cmdlet()
 
     [<Parameter(Mandatory = true, Position = 0)>]
     member val basePath : string = null with get, set
@@ -194,23 +195,24 @@ type GetDeletedImagesCmdlet() =
     [<Parameter(Mandatory = true, Position = 1)>]
     member val copyPath : string = null with get, set
 
-    override this.ProcessRecord() =
-        let baseDir = DirectoryInfo this.basePath
-        let copyDir = DirectoryInfo this.copyPath
+    override a.ProcessRecord() =
+        let baseDir = DirectoryInfo a.basePath
+        let copyDir = DirectoryInfo a.copyPath
         let baseFiles = Helper.getImages baseDir
         let copyFiles = copyDir.GetFiles("*.jpg", SearchOption.AllDirectories)
 
-        let stripFileName (file:FileInfo) (dir:string) : string =
-            file.DirectoryName.Replace(dir, "") + @"\" + file.Name
+        let stripFileNameFromBaseAndExtension (file:FileInfo) (dir:string) : string =
+            file.DirectoryName.Replace(dir, "") + @"\" + Path.GetFileNameWithoutExtension(file.Name)
 
         let strippedBaseFileNames = baseFiles
                                     |> Array.map (fun file ->
-                                        stripFileName file baseDir.FullName)
+                                        stripFileNameFromBaseAndExtension file baseDir.FullName)
 
         let strippedCopyFileNames = copyFiles
                                     |> Array.map (fun file ->
-                                        stripFileName file copyDir.FullName)
+                                        stripFileNameFromBaseAndExtension file copyDir.FullName)
 
         let difference = (Set.ofArray strippedCopyFileNames) - (Set.ofArray strippedBaseFileNames)
         difference
-        |> Seq.iter (fun item -> this.WriteObject(copyDir.FullName + item))
+        |> Seq.iter (fun item -> a.WriteObject(copyDir.FullName + item + ".jpg"))
+

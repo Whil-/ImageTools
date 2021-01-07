@@ -96,7 +96,7 @@ let copyImageToJPGIfNotExist (file:FileInfo) (oldBasePath:string) (newBasePath:s
         newimage.LastWriteTimeUtc <- file.LastWriteTimeUtc
 
 let getVideos (fromDir: DirectoryInfo) =
-    let extensionExpression = Regex(@".(mov|mp4|mpeg|gif|avi)", RegexOptions.IgnoreCase)
+    let extensionExpression = Regex(@".(mov|mp4|mpeg|gif|avi|mts)", RegexOptions.IgnoreCase)
     fromDir.GetFiles("*.*", SearchOption.AllDirectories)
     |> Array.filter (fun file -> extensionExpression.IsMatch file.Extension)
     

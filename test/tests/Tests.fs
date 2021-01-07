@@ -29,7 +29,7 @@ let rec directoryCopy srcPath dstPath copySubDirs =
 let ``Imagefile collector works`` () =
     let inputfolder = DirectoryInfo("./Input")
     let inputFileCount = Helper.getImages inputfolder |> Array.length
-    Assert.Equal(10,inputFileCount)
+    Assert.Equal(11,inputFileCount)
 
 [<Fact>]
 let ``I can move images in folder and based on the metadata move them to new folder with structure`` () =
@@ -37,8 +37,7 @@ let ``I can move images in folder and based on the metadata move them to new fol
     directoryCopy "./Input" tempfolder.FullName true
 
     let outputfolder = DirectoryInfo("./TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
-    if not outputfolder.Exists then 
-        outputfolder.Create()
+    if not outputfolder.Exists then outputfolder.Create()
     let cmd = MoveImagesCmdlet()
     try 
         cmd.fromPath <- tempfolder.FullName
@@ -46,7 +45,7 @@ let ``I can move images in folder and based on the metadata move them to new fol
         cmd.Invoke() |> Seq.cast<PSObject> |> Seq.iter ignore
 
         //Check that files are created
-        Assert.Equal(10, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
+        Assert.Equal(11, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
         //Check that files are deleted from source (4 are not images and should still be there)
         Assert.Equal(5, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
@@ -70,8 +69,7 @@ let ``I can move videos in folder to new folder`` () =
     directoryCopy "./Input" tempfolder.FullName true
 
     let outputfolder = DirectoryInfo("./TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
-    if not outputfolder.Exists then 
-        outputfolder.Create()
+    if not outputfolder.Exists then outputfolder.Create()
     let cmd = MoveVideosCmdlet()
     try 
         cmd.fromPath <- tempfolder.FullName
@@ -82,7 +80,7 @@ let ``I can move videos in folder to new folder`` () =
         Assert.Equal(3, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
         //Check that files are deleted from source (12 are not videos and should still be there)
-        Assert.Equal(12, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
+        Assert.Equal(13, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
         //Check that empty folders are deleted from source
         Assert.False(Directory.Exists(tempfolder.FullName + "/A folder/cat folder"))
@@ -98,30 +96,53 @@ let ``I can move videos in folder to new folder`` () =
 [<Fact>]
 let ``I can iterate through a folder and copy images`` () =
     let inputfolder = DirectoryInfo("./Input")
-    
-    let inputFileCount = Helper.getImages inputfolder |> Array.length
     let outputfolder = DirectoryInfo("./TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
-    
-    if not outputfolder.Exists then 
-        outputfolder.Create()
+    if not outputfolder.Exists then outputfolder.Create()
+
+    try
         let cmd = CopyImagesCmdlet()
-        
-        try
-            cmd.fromPath <- inputfolder.FullName
-            cmd.toPath <- outputfolder.FullName
-            cmd.percentageSize <- 5
-            cmd.quality <- 20
-
-            cmd.Invoke() |> Seq.cast<PSObject> |> Seq.iter ignore
+        cmd.fromPath <- inputfolder.FullName
+        cmd.toPath <- outputfolder.FullName
+        cmd.percentageSize <- 5
+        cmd.quality <- 20
+        cmd.Invoke() |> Seq.cast<PSObject> |> Seq.iter ignore
             
-        with
-            | ex -> printfn "%s" (ex.Message)
-
-        let outputFileCount = Helper.getImages outputfolder |> Array.length
         Assert.True(File.Exists(outputfolder.FullName + "/A folder/20180721_104422.jpg"))
+    
+        Assert.True(Helper.getImages inputfolder |> Array.length > 0)
+        Assert.Equal(Helper.getImages inputfolder |> Array.length,
+                     Helper.getImages outputfolder |> Array.length)
+    finally 
         outputfolder.Delete(recursive = true)
 
-        Assert.True(inputFileCount > 0)
-        Assert.Equal(inputFileCount,outputFileCount)
-    else
-        Assert.True(false)
+[<Fact>]
+let ``I can list deleted files in copy`` () =
+    let tempfolder = DirectoryInfo("./Input_temp")
+    directoryCopy "./Input" tempfolder.FullName true
+
+    let outputfolder = DirectoryInfo("./TestOutput_" + System.Guid.NewGuid().ToString().Substring(0,10))
+    if not outputfolder.Exists then outputfolder.Create()
+    try
+        let cmd1 = CopyImagesCmdlet()
+        cmd1.fromPath <- tempfolder.FullName
+        cmd1.toPath <- outputfolder.FullName
+        cmd1.percentageSize <- 5
+        cmd1.quality <- 20
+        cmd1.Invoke() |> Seq.cast<PSObject> |> Seq.iter ignore
+        
+        tempfolder.GetFiles("*.*",SearchOption.AllDirectories) 
+        |> Seq.filter (fun f ->  f.Name.Contains("2013-10-18.jpg") ||
+                                 f.Name.Contains("20201230_112809.heic")) 
+        |> Seq.iter (fun (f) -> f.Delete())
+        
+        let cmd2 = GetDeletedImagesCmdlet()
+        cmd2.basePath <- tempfolder.FullName
+        cmd2.copyPath <- outputfolder.FullName
+        let result = cmd2.Invoke<string>() |> Seq.toList
+        result |> List.tryFind (fun (a) -> a.Contains("2013-10-18.jpg")) |> Option.isSome |> Assert.True
+        result |> List.tryFind (fun (a) -> a.Contains("20201230_112809.jpg")) |> Option.isSome |> Assert.True
+        result |> List.tryFind (fun (a) -> a.Contains("20201230_112809(2).jpg")) |> Option.isSome |> Assert.False
+
+    finally
+        outputfolder.Delete(recursive = true)
+        tempfolder.Delete(recursive = true)

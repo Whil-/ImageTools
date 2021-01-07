@@ -57,6 +57,9 @@
     <Content Include="Input\A folder\Another folder\20201230_112809.heic">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Input\A folder\Another folder\20201230_112809%282%29.heic">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
