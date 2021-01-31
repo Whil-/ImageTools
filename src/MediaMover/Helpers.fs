@@ -63,7 +63,7 @@ let MoveFile (oldImage:FileInfo) (newFullName:string) =
     if not newImage.Directory.Exists then
         newImage.Directory.Create()
     try
-        oldImage.CopyTo(newImage.FullName) |> ignore
+        oldImage.CopyTo(newImage.FullName, true) |> ignore
         oldImage.Delete()
     with
     | ex -> printfn $"{ex.Message}"

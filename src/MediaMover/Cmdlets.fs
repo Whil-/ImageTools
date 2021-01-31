@@ -75,6 +75,7 @@ type MoveImagesCmdlet() =
                         SourcePath = file.DirectoryName
                         TargetBasePath = toDir.FullName
                     }
+                    this.WriteVerbose $"Moving... ({file.FullName} -> {ImageData.NewFullName})"
                     Helper.MoveFile file ImageData.NewFullName |> ignore
                     
                 })
@@ -124,6 +125,7 @@ type MoveVideosCmdlet() =
                         SourcePath = file.DirectoryName
                         TargetBasePath = toDir.FullName
                     }
+                    this.WriteVerbose $"Moving... ({file.FullName} -> {VideoData.NewFullName})"
                     Helper.MoveFile file VideoData.NewFullName |> ignore
                 })
             |> Async.Parallel
