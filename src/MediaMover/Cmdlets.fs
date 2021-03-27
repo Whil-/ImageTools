@@ -60,6 +60,7 @@ type MoveImagesCmdlet() =
             |> Array.skip index
             |> Array.take (min (items - index) parallellcnt)
             |> Array.map (fun file ->
+                this.WriteVerbose $"Moving... ({file.FullName} -> {toDir.FullName})"
                 async {
                     let raw = Helper.extractInfo file.FullName
                     let ImageData = { 
@@ -75,7 +76,6 @@ type MoveImagesCmdlet() =
                         SourcePath = file.DirectoryName
                         TargetBasePath = toDir.FullName
                     }
-                    this.WriteVerbose $"Moving... ({file.FullName} -> {ImageData.NewFullName})"
                     Helper.MoveFile file ImageData.NewFullName |> ignore
                     
                 })
@@ -118,6 +118,7 @@ type MoveVideosCmdlet() =
             |> Array.skip index
             |> Array.take (min (items - index) parallellcnt)
             |> Array.map (fun file ->
+                this.WriteVerbose $"Moving... ({file.FullName} -> {toDir.FullName})"
                 async {
                     let VideoData = { 
                         DatePath = file.LastWriteTime.ToString("yyyy") + @"\" + file.LastWriteTime.ToString("MM")
@@ -125,7 +126,6 @@ type MoveVideosCmdlet() =
                         SourcePath = file.DirectoryName
                         TargetBasePath = toDir.FullName
                     }
-                    this.WriteVerbose $"Moving... ({file.FullName} -> {VideoData.NewFullName})"
                     Helper.MoveFile file VideoData.NewFullName |> ignore
                 })
             |> Async.Parallel
