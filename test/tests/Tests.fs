@@ -29,7 +29,7 @@ let rec directoryCopy srcPath dstPath copySubDirs =
 let ``Imagefile collector works`` () =
     let inputfolder = DirectoryInfo("./Input")
     let inputFileCount = Helper.getImages inputfolder |> Array.length
-    Assert.Equal(11,inputFileCount)
+    Assert.Equal(10,inputFileCount)
 
 [<Fact>]
 let ``I can move images in folder and based on the metadata move them to new folder with structure`` () =
@@ -45,9 +45,9 @@ let ``I can move images in folder and based on the metadata move them to new fol
         cmd.Invoke() |> Seq.cast<PSObject> |> Seq.iter ignore
 
         //Check that files are created
-        Assert.Equal(11, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
+        Assert.Equal(10, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
-        //Check that files are deleted from source (4 are not images and should still be there)
+        //Check that files are deleted from source (some are not images and should still be there)
         Assert.Equal(5, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
         //Check that empty folders are deleted from source
@@ -79,8 +79,8 @@ let ``I can move videos in folder to new folder`` () =
         //Check that files are created
         Assert.Equal(3, outputfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
-        //Check that files are deleted from source (12 are not videos and should still be there)
-        Assert.Equal(13, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
+        //Check that files are deleted from source (some are not videos and should still be there)
+        Assert.Equal(12, tempfolder.GetFiles("*.*", SearchOption.AllDirectories) |> Array.length)
 
         //Check that empty folders are deleted from source
         Assert.False(Directory.Exists(tempfolder.FullName + "/A folder/cat folder"))
