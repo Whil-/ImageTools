@@ -9,14 +9,20 @@ type ImageMoverData = {
     ImageName:string
     SourcePath:string
     TargetBasePath:string
-} with member this.NewFullName = this.TargetBasePath + @"\" + this.DatePath + @"\" + this.Camera + @"\" + this.ImageName
+} with
+    member this.isTakenByCamera = not (System.String.IsNullOrEmpty(this.Camera))
+    member this.NewFullName =
+        match this.isTakenByCamera with
+            | true -> this.TargetBasePath + @"\" + "Photos" + @"\" + this.DatePath + @"\" + this.Camera + @"\" + this.ImageName
+            | false -> this.TargetBasePath + @"\" + "Images" + @"\" + this.DatePath + @"\" + this.ImageName
 
 type VideoMoverData = {
     DatePath:string
     VideoName:string
     SourcePath:string
     TargetBasePath:string
-} with member this.NewFullName = this.TargetBasePath + @"\" + this.DatePath + @"\" + this.VideoName
+} with
+    member this.NewFullName = this.TargetBasePath + @"\" + "Videos" + @"\" + this.DatePath + @"\" + this.VideoName
 
 // Ref: https://github.com/drewnoakes/metadata-extractor-dotnet
 [<Cmdlet("Get","FileAssortedProperties")>]
@@ -71,7 +77,7 @@ type MoveImagesCmdlet() =
                                  | (Some a, Some b) -> $"{a}_{b}"
                                  | (Some a, None) -> $"{a}"
                                  | (None, Some b) -> $"{b}"
-                                 | (None, None) -> "Unknown camera"
+                                 | (None, None) -> ""
                         ImageName = file.Name
                         SourcePath = file.DirectoryName
                         TargetBasePath = toDir.FullName

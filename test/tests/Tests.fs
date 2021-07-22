@@ -54,11 +54,11 @@ let ``I can move images in folder and based on the metadata move them to new fol
         Assert.False(Directory.Exists(tempfolder.FullName + "/A folder/Another folder"))
 
         //Check that some folders are created correctly
-        Assert.True(Directory.Exists(outputfolder.FullName + "/2018/07/samsung_SM-N950F"))
-        Assert.True(File.Exists(outputfolder.FullName + "/2018/07/samsung_SM-N950F/20180721_104422.jpg"))
-        Assert.True(Directory.Exists(outputfolder.FullName + "/2018/07/SONY_ILCE-6000"))
-        Assert.True(Directory.Exists(outputfolder.FullName + "/2020/12/samsung_SM-N986B"))
-        Assert.True(Directory.Exists(outputfolder.FullName + "/2019/03/Unknown Camera"))
+        Assert.True(Directory.Exists(outputfolder.FullName + "/Photos/2018/07/samsung_SM-N950F"))
+        Assert.True(File.Exists(outputfolder.FullName + "/Photos/2018/07/samsung_SM-N950F/20180721_104422.jpg"))
+        Assert.True(Directory.Exists(outputfolder.FullName + "/Photos/2018/07/SONY_ILCE-6000"))
+        Assert.True(Directory.Exists(outputfolder.FullName + "/Photos/2020/12/samsung_SM-N986B"))
+        Assert.True(Directory.Exists(outputfolder.FullName + "/Images/2019/03"))
     finally
         outputfolder.Delete(recursive = true)
         tempfolder.Delete(recursive = true)
@@ -86,8 +86,8 @@ let ``I can move videos in folder to new folder`` () =
         Assert.False(Directory.Exists(tempfolder.FullName + "/A folder/cat folder"))
 
         //Check that some folders are created correctly
-        Assert.True(File.Exists(outputfolder.FullName + "/2019/12/cat.gif"))
-        Assert.True(Directory.Exists(outputfolder.FullName + "/2019/03"))
+        Assert.True(File.Exists(outputfolder.FullName + "/Videos/2019/12/cat.gif"))
+        Assert.True(Directory.Exists(outputfolder.FullName + "/Videos/2019/03"))
         
     finally
         outputfolder.Delete(recursive = true)
